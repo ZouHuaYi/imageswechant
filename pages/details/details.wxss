@@ -1,0 +1,37 @@
+.bigImg{
+  width: 60%;
+  margin: 0 auto;
+  padding:30rpx 0; 
+}
+.bigImg image{
+  width: 100%;
+}
+.book-content{
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 20rpx;
+}
+.con-head{
+  width: 100%;
+  text-align: center;
+}
+.con-head text{
+  display: block;
+}
+.con-head text.n{
+  font-size: 20px;
+  color: royalblue;
+  font-weight: 900;
+}
+.con-head text.z{
+  color: #666666;
+}
+.con-head text.h{
+  font-size: 14px;
+  color: #cccccc;
+}
+.con-box{
+  font-size: 14px;
+  color: #666666;
+  line-height: 24px;
+}

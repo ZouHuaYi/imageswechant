@@ -1,0 +1,18 @@
+<view class="container">
+  <view class='book-box'>
+    <view class='bigImg'><image mode='widthFix' src='{{conBook.images.large}}'></image></view>
+    <view class='book-content'>
+      <view class='con-head'>
+        <text class='n'>{{conBook.title}}</text>
+        <text class='z' >作者：{{conBook.author[0]}} {{conBook.author[1]}}</text>
+        <text class='z'>出版社：{{conBook.publisher}}</text>
+        <text class='h'>时间：{{conBook.pubdate}}</text>
+      </view>
+      <view class='con-box'>
+        {{conBook.summary}}
+      </view>
+      <view class='con-rat'>参与评论人数：{{conBook.rating.numRaters}}人</view>
+      <view class='con-rmax'>获得平均分数：{{conBook.rating.average}}分</view>
+    </view>
+  </view>
+</view>

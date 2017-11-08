@@ -1,0 +1,27 @@
+.test-img{
+  width: 100%;
+  text-align: center;
+}
+.test-img image{
+ width: 100%;
+}
+.img-show{
+  padding-top:30px; 
+  width:100%;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row nowrap; 
+}
+.btnImg{
+  margin-top: 10px;
+}
+.imgScale{
+  width: 100%;
+  box-sizing: border-box;
+  padding: 16rpx;
+  border:2px solid #f00;
+  overflow: hidden;
+}
+.imgScale img{
+  width: 100%;
+}

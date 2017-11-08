@@ -1,0 +1,21 @@
+<view class="container">
+  <view class='test-img'>
+    <!-- <image class='fill' mode='scaleToFill' src='../../images/1.jpg'></image>
+    <image class='fill' mode='aspectFit' src='../../images/1.jpg'></image>
+    <image class='fill' mode='aspectFill' src='../../images/1.jpg'></image> -->
+    <!-- 常用的高度自动适应，图片的宽度固定  -->
+    <!-- <image class='fill' mode='widthFix' src='../../images/1.jpg'></image> -->
+    <!-- 这个是宽高比例是从js里面修改的  -->
+     <!-- <image class='fill' bindload="imageLoad" style="width:{{ images.width }}px; height:{{ images.height }}px;" src='../../images/1.jpg'></image> -->
+      <view class='img-show'>
+        <image wx:for="{{avatarUrl}}"  mode='widthFix' data-index="{{index}}" bindtap="previewImage"  wx:key="unique" src="{{item}}"></image>
+      </view>
+      <button class='btnImg' bindtap="bindViewTap" type="primary" size="mini" form-type ='submit'>调用相册图片</button>
+      <view class='imgScale' catchtouchstart="touchstartCallback"  catchtouchmove="touchmoveCallback" catchtouchend="touchendCallback"  >
+        <image src='../../images/1.jpg' mode='widthFix' style='transform:translate3d({{imgs.offsetX}}px,{{imgs.offsetY}}px,0) scale({{imgs.scale}});transform-origin: 0px 0px 0px;' ></image>
+      </view>
+      <text>偏于的x:{{imgs.offsetX}}</text>
+      <text>移动的y:{{imgs.offsetY}}</text>
+      <text>放缩比例：{{imgs.scale}}</text>
+  </view>
+</view>

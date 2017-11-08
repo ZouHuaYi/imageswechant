@@ -1,0 +1,48 @@
+{
+  "pages":[
+    "pages/index/index",
+    "pages/details/details",
+    "pages/search/search",
+    "pages/img/img"
+  ],
+  "window":{
+    "backgroundTextStyle": "white",
+    "navigationBarTextStyle": "#ffffff",
+    "navigationBarTitleText": "环球小镇",
+    "navigationBarBackgroundColor": "#292929",
+    "backgroundColor": "#F2f2f2"
+  },
+  "tabBar":{
+    "color": "#6e6d6b",
+    "selectedColor": "#f9f027",
+    "borderStyle": "white",
+    "backgroundColor": "#292929",
+    "list":[
+      {
+        "pagePath":"pages/index/index",
+        "iconPath":"images/footer-icon-01.png",
+        "selectedIconPath":"images/footer-icon-01-active.png",
+        "text":"红楼梦"
+      },
+      {
+        "pagePath": "pages/search/search",
+        "iconPath":"images/footer-icon-02.png",
+        "selectedIconPath":"images/footer-icon-02-active.png",
+        "text": "查找书籍"
+      },
+      {
+        "pagePath": "pages/img/img",
+        "iconPath":"images/footer-icon-03.png",
+        "selectedIconPath":"images/footer-icon-03-active.png",
+        "text": "图片测试"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "images/footer-icon-04.png",
+        "selectedIconPath": "images/footer-icon-04-active.png",
+        "text": "我的"
+      }
+      ]
+  },
+  "debug": true
+}

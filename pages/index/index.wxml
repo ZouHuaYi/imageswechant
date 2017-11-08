@@ -1,0 +1,33 @@
+<!--index.wxml-->
+<view class="container">
+<!-- 轮播图的主要部分  -->
+  <view class="banner">
+    <swiper class="swiper_box" autoplay="true" bindchange="tabBanner" indicator-dots="true" indicator-color="#f00" indicator-active-color="#ccc">
+      <block wx:for="{{images}}">
+        <swiper-item>
+          <image src="{{item.image}}" mode="widthFill" class="slide-image" />
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+  <view>
+  <!-- 这里是书本的列表页来的  -->
+    <view class='all-book'>
+      <view class='book-item' wx:for="{{books}}">
+        <view class='book-image' id="{{item.id}}" bindtap="goto">
+          <image  mode='widthFix' src='{{item.image}}' />
+        </view>
+        <view class='book-text'>
+          <text>书名：{{item.title}}</text>
+          <text>作者：{{item.author[0]}}</text>
+          <text>价格：{{item.price}}</text>
+          <text>出版社：{{item.publisher}}</text>
+          <view class='book-jj'>简介：{{item.summary}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <loading hidden="{{loadingHidden}}">
+    正在加载中...
+  </loading>
+</view>
