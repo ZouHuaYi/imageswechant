@@ -11,11 +11,9 @@
         <image wx:for="{{avatarUrl}}"  mode='widthFix' data-index="{{index}}" bindtap="previewImage"  wx:key="unique" src="{{item}}"></image>
       </view>
       <button class='btnImg' bindtap="bindViewTap" type="primary" size="mini" form-type ='submit'>调用相册图片</button>
-      <view class='imgScale' catchtouchstart="touchstartCallback"  catchtouchmove="touchmoveCallback" catchtouchend="touchendCallback"  >
-        <image src='../../images/1.jpg' mode='widthFix' style='transform:translate3d({{imgs.offsetX}}px,{{imgs.offsetY}}px,0) scale({{imgs.scale}});transform-origin: 0px 0px 0px;' ></image>
+      <!-- 这里是手势放大的部分  -->
+      <view class='imgScale' bindtap='doubleTap' bindtouchstart="touchstartCallback"  bindtouchmove="touchmoveCallback" catchtouchend="touchendCallback"  >
+        <image src='../../images/1.jpg' bindload="imgscale" mode='widthFix' style='transform:translate3d({{imgs.offsetX}}px,{{imgs.offsetY}}px,0) scale({{imgs.scale}});transform-origin: 0px 0px 0px; transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1);transition-duration: 0ms;' ></image>
       </view>
-      <text>偏于的x:{{imgs.offsetX}}</text>
-      <text>移动的y:{{imgs.offsetY}}</text>
-      <text>放缩比例：{{imgs.scale}}</text>
   </view>
 </view>

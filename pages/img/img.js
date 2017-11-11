@@ -13,33 +13,47 @@ Page({
       zoom:false,
       scale:1,
       distance:0,
-      minScale:1
+      minScale:0.5,
+      width:0,
+      height:0
     }
   },
   /*
   图片实现放缩功能和移动的函数总和
   */
+  imgscale:function(e){
+    var $width = e.detail.width,      //获取图片真实宽度
+      $height = e.detail.height,
+      ratio = $width / $height;       //图片的真实宽高比例
+    var viewWidth = wx.getSystemInfoSync().windowWidth-18;
+    var viewHeight = viewWidth / ratio;    //计算的高度值
+    this.data.imgs.width = viewWidth;
+    this.data.imgs.height = viewHeight;
+  },
   touchstartCallback:function(e){
-    console.log(e)
     if (e.touches.length===1){
+      this.setData({
+        start_time:e.timeStamp
+      })
       let { clientX, clientY } = e.touches[0];
       this.startX = clientX;
       this.startY = clientY;
       this.touchStartEvent = e.touches;
+
     } else {
       let xMove = e.touches[1].clientX - e.touches[0].clientX;
       let yMove = e.touches[1].clientY - e.touches[0].clientY;
       let distance = Math.sqrt(xMove * xMove + yMove * yMove);
       this.setData({
         'imgs.distance': distance,
-        'imgs.zoom': true, //缩放状态
+        'imgs.zoom': true,                     //缩放状态
       })
     }
   },
   //手移动的时候
   touchmoveCallback:function(e){
     if(e.touches.length===1){
-      if (this.data.imgs.zoom || this.data.imgs.scale<=1){return false;}
+      if (this.data.imgs.zoom || this.data.imgs.scale<=1){return false;}    
       let { clientX, clientY } = e.touches[0];
       let offsetX = clientX - this.startX;
       let offsetY = clientY - this.startY;
@@ -48,34 +62,87 @@ Page({
       let { imgs } = this.data;
       imgs.offsetX += offsetX;
       imgs.offsetY += offsetY;
+      let difScale=imgs.scale-1;
+      let difW = -imgs.width*difScale;
+      let difH = -imgs.height*difScale;
+      imgs.offsetX = imgs.offsetX > difW ? imgs.offsetX : difW;
+      imgs.offsetY = imgs.offsetY > difH ? imgs.offsetY : difH;
+      imgs.offsetX =imgs.offsetX > 0 ? 0 : imgs.offsetX;
+      imgs.offsetY =imgs.offsetY > 0 ? 0 : imgs.offsetY;
       this.setData({
         imgs: imgs
       });
-      console.log(imgs)
     }else{
       //双指缩放
       let xMove = e.touches[1].clientX - e.touches[0].clientX;
       let yMove = e.touches[1].clientY - e.touches[0].clientY;
       let distance = Math.sqrt(xMove * xMove + yMove * yMove);
-
       let distanceDiff = distance - this.data.imgs.distance;
-      let newScale = this.data.imgs.scale + 0.005 * distanceDiff;
-
+      let scaleRadito = 0.005 * distanceDiff;
+      let newScale = this.data.imgs.scale + scaleRadito;
+      if (newScale < this.data.imgs.minScale){return false;}
+      let offsetX = this.data.imgs.offsetX - (this.data.imgs.width * scaleRadito)/2;
+      let offsetY = this.data.imgs.offsetY - (this.data.imgs.height * scaleRadito)/2;
+      if (newScale>1){
+        let difScale = newScale - 1;
+        let difW = -this.data.imgs.width * difScale;    //移动的最小距离
+        let difH = -this.data.imgs.height * difScale;    
+         if (offsetX>=0){
+           offsetX =0;
+         } else {
+           offsetX = offsetX < difW ? difW : offsetX;
+         }
+         if ( offsetY >= 0){
+           offsetY = 0;
+         } else {
+           offsetY = offsetY < difH ? difH : offsetY;
+         }
+      } 
       this.setData({
         'imgs.distance': distance,
         'imgs.scale': newScale,
+        'imgs.offsetX': offsetX,
+        'imgs.offsetY': offsetY,
       })
     }
   },
   touchendCallback: function (e) {
     //触摸结束
+    this.setData({
+      end_time:e.timeStamp
+    })
     if (e.touches.length === 0) {
       this.setData({
         'imgs.zoom': false,    //重置缩放状态
       })
     }
   },
+  doubleTap:function(e){
+    var that = this
+    let diffTime = this.data.end_time - this.data.start_time;
+    //longtap冲突处理
+    if (diffTime<350){
+      // 当前点击的时间
+      var currentTime = e.timeStamp
+      var lastTapTime = that.lastTapTime
+      // 更新最后一次点击时间
+      that.lastTapTime = currentTime;
+      if (currentTime - lastTapTime < 300){
+        //这里要实现的双击事件
+        console.log("double tap");
+        let {imgs}=that.data;
+        imgs.scale+=0.2;
+        imgs.offsetX = imgs.offsetX - (imgs.width * 0.2) / 2;
+        imgs.offsetY = imgs.offsetY - (imgs.height * 0.2) / 2;
+        that.setData({
+          "imgs": imgs
+        })
 
+
+      }
+    }
+
+  },
 
 
 
@@ -102,7 +169,7 @@ Page({
   /*
   调用图片
   */
-  bindViewTap: function () {
+  bindViewTap: function (e) {
     var that = this;
     wx.chooseImage({
       // 设置最多可以选择的图片张数，默认9,如果我们设置了多张,那么接收时//就不在是单个变量了,

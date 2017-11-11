@@ -38,7 +38,14 @@
 				{
 					"id": -1,
 					"name": "img",
-					"pathName": "pages/img/img"
+					"pathName": "pages/img/img",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "my",
+					"pathName": "pages/my/my",
+					"query": ""
 				}
 			]
 		}

@@ -18,8 +18,8 @@
 .imgScale{
   width: 100%;
   box-sizing: border-box;
-  padding: 16rpx;
-  border:2px solid #f00;
+  padding: 8px;
+  border:1px solid #f00;
   overflow: hidden;
 }
 .imgScale img{
